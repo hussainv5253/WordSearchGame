@@ -1,0 +1,46 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+#fancytext {
+    -fx-font:100px 'Apple Chancery', sans-serif;                            
+    -fx-fill: #418aa5;
+    -fx-stroke: #418aa5;
+    -fx-stroke-width: 1;
+     -fx-font-size: 32pt;
+}
+
+
+#labeltext{
+	 -fx-font: 100px 'Bradley Hand';
+    -fx-fill: #2596be;
+    -fx-stroke: #2596be;
+    -fx-stroke-width: 1;
+     -fx-font-size: 18pt;
+}
+#button {
+	-fx-font: 16px 'Bradley Hand';
+    -fx-padding: 10;
+    -fx-text-fill: #fef9f3;
+    -fx-background-color: #a2b4cc;
+}
+#button:hover{
+	-fx-background-color:#b8acac;
+}
+
+#buttonBack{
+	-fx-padding:0 ;
+ 	-fx-pref-height: 20;
+ 	-fx-pref-width: 50;
+   	-fx-text-fill: #fef9f3;
+ 	-fx-background-color: #b8acac;
+	
+}
+#buttonBack:hover{
+    -fx-background-color:#b8acac;
+}
+
+
+
+
+
+
+
