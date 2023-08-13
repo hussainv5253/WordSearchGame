@@ -1,6 +1,10 @@
 package application;
+	
 
-import application.scene.GameManager;
+import java.io.File;
+//import java.util.Random;
+
+import scene.GameManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -8,29 +12,29 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-import java.io.File;
+import static scene.Turorial.getTHbox;
+//import static scene.Media.getMHbox;
 
-import static application.scene.Tutorial.getTHbox;
-
-
-public class Main extends Application implements EventHandler<KeyEvent>{
+public class Main extends Application implements EventHandler<KeyEvent>
+{
 	public enum Level {
 		LEVEL1, LEVEL2, LEVEL3
     }
@@ -48,8 +52,11 @@ public class Main extends Application implements EventHandler<KeyEvent>{
     GraphicsContext gc; // Graphics Context used to print the Main Game screen
     String input = ""; // Stores the word that the user selects
     GameManager game = new GameManager();
-
-	private void initGameScene(Stage stage)
+    
+    private MediaPlayer mediaPlayer;
+    private boolean playMusic;
+    
+    private void initGameScene(Stage stage)
 	{
 //		Media sound = new Media(new File("src/backgroundImage/bgm.mp3").toURI().toString());
 //		MediaPlayer mediaPlayer = new MediaPlayer(sound);
@@ -100,93 +107,10 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 
 	AnimationTimer animationTimer;
 
-	public void initDiffculty(Stage stage){
-		Text welGame = new Text("Welcome to this Word Search");
-		welGame.setId("fancytext");
 
-		Text message = new Text("Please Select Difficulty:");
-		message.setId("labeltext");
-
-		VBox labelContainer = new VBox();
-		labelContainer.setAlignment(Pos.CENTER);
-		labelContainer.getChildren().addAll(welGame,message);
-		labelContainer.setSpacing(30);
-
-		//create Hbox for button to message game difficulty
-		buttonEasy = new Button("Easy");
-		buttonEasy.setId("button");
-		buttonMedium = new Button("Medium");
-		buttonMedium.setId("button");
-		buttonHard= new Button("Hard");
-		buttonHard.setId("button");
-		changeBackGround=new Button("Change Background");
-		changeBackGround.setId("button");
-
-
-		VBox buttonContainer=new VBox();
-		buttonContainer.setAlignment(Pos.CENTER);
-		buttonContainer.getChildren().addAll(buttonEasy, buttonMedium, buttonHard,changeBackGround);   // Adds Buttons
-		buttonContainer.setSpacing(30);
-
-		VBox rootContainer = new VBox(VBOX_SPACING);
-		rootContainer.setBackground(new Background(
-				new BackgroundImage(
-						new Image("/backgroundImage/img_1.png"),
-						BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-						new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
-						new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true)
-				)));
-
-		rootContainer.setAlignment(Pos.CENTER);
-		HBox hBox=getTHbox();
-		rootContainer.getChildren().addAll(labelContainer, buttonContainer, hBox);
-		difficultyScene = new Scene(rootContainer, Width, Width);
-				//set frontend
-		difficultyScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
-
-		Media sound = new Media(new File("src/backgroundImage/bgm.mp3").toURI().toString());
-		mediaPlayer = new MediaPlayer(sound);
-		Button button=new Button();
-		ImageView image=new ImageView("backgroundImage/img_6.png");
-		image.setPreserveRatio(true);
-		image.setFitHeight(30);
-		button.setGraphic(image);
-		button.setBackground(null);
-		button.setPrefSize(Region.USE_PREF_SIZE,30);
-		button.setContentDisplay(ContentDisplay.CENTER);
-		button.setPadding(new Insets(0,0,0,450));
-
-
-		hBox.getChildren().add(button);
-		button.setOnAction(e->{
-			if(playMusic){
-				playMusic=false;
-				mediaPlayer.pause();
-				ImageView image1=new ImageView("backgroundImage/img_7.png");
-				image1.setPreserveRatio(true);
-				image1.setFitHeight(30);
-				button.setGraphic(image1);
-			}else{
-				playMusic=true;
-				mediaPlayer.play();
-				ImageView image1=new ImageView("backgroundImage/img_6.png");
-				image1.setPreserveRatio(true);
-				image1.setFitHeight(30);
-				button.setGraphic(image1);
-			}
-
-		});
-
-
-		mediaPlayer.setAutoPlay(true);
-		playMusic=true;
-
-		stage.setScene(difficultyScene);
-		stage.show();
-	}
-	MediaPlayer mediaPlayer;
-	boolean playMusic;
+//	MediaPlayer mediaPlayer;
+//	boolean playMusic;
+	
 	public void initOver(Stage stage){
 		Text close = new Text("Good Job!");
 		close.setId("fancytext");
@@ -200,9 +124,9 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 		labelClosing.getChildren().addAll(close,retry);
 
 		//create Hbox for button to message game difficulty
-		buttonYes = new Button("Yea");
+		buttonYes = new Button("Yes !");
 		buttonYes.setId("button");
-		buttonNo = new Button("I'm done");
+		buttonNo = new Button("No!! ");
 		buttonNo.setId("button");
 
 
@@ -215,7 +139,7 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 
 		rootClosing.setBackground(new Background(
 				new BackgroundImage(
-						new Image("/backgroundImage/img_3.jpg"),
+						new Image("/backgroundImage/img_1.png"),
 						BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
 						new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
 						new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true)
@@ -230,10 +154,11 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 		stage.setScene(gameOver);
 		stage.show();
 	}
+
+	
 	@Override
 	public void start(Stage primaryStage) {
-
-	       try {
+		try {
 			/* Setting Scene1 The Launch Page of Game 
 			 * */
 
@@ -242,12 +167,97 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 			primaryStage.setResizable(false);
 			primaryStage.setTitle("Search Game");
 
-			initDiffculty(primaryStage);
+//			initDiffculty(primaryStage);
+			Text welGame = new Text("Word Search Game.....");
+			welGame.setId("fancytext");
+
+			Text message = new Text("Please Choose Level ");
+			message.setId("labeltext");
+
+			VBox labelContainer = new VBox();
+			labelContainer.setAlignment(Pos.CENTER);
+			labelContainer.getChildren().addAll(welGame,message);
+			labelContainer.setSpacing(30);
+
+			//create Hbox for button to message game difficulty
+			buttonEasy = new Button("Easy");
+			buttonEasy.setId("button");
+			buttonMedium = new Button("Medium");
+			buttonMedium.setId("button");
+			buttonHard= new Button("Hard");
+			buttonHard.setId("button");
+			changeBackGround=new Button("Change Background");
+			changeBackGround.setId("button");
+
+
+			VBox buttonContainer=new VBox();
+			buttonContainer.setAlignment(Pos.CENTER);
+			buttonContainer.getChildren().addAll(buttonEasy, buttonMedium, buttonHard,changeBackGround);   // Adds Buttons
+			buttonContainer.setSpacing(30);
+
+			VBox rootContainer = new VBox(VBOX_SPACING);
+			rootContainer.setBackground(new Background(
+					new BackgroundImage(
+							new Image("/backgroundImage/img_1.png"),
+							BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+							new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
+							new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true)
+					)));
+
+			rootContainer.setAlignment(Pos.CENTER);
+			HBox hBox=getTHbox();
+//			HBox hmbox= getMHbox();
+			rootContainer.getChildren().addAll(labelContainer, buttonContainer, hBox);
+			difficultyScene = new Scene(rootContainer, Width, Width);
+					//set frontend
+			difficultyScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+
+			Media sound = new Media(new File("src/backgroundImage/bgm.mp3").toURI().toString());
+			mediaPlayer = new MediaPlayer(sound);
+			Button button=new Button();
+			ImageView image=new ImageView("backgroundImage/img_6.png");
+			image.setPreserveRatio(true);
+			image.setFitHeight(30);
+			button.setGraphic(image);
+			button.setBackground(null);
+			button.setPrefSize(Region.USE_PREF_SIZE,30);
+			button.setContentDisplay(ContentDisplay.CENTER);
+			button.setPadding(new Insets(0,0,0,450));
+
+
+			hBox.getChildren().add(button);
+			button.setOnAction(e->{
+				if(playMusic){
+					playMusic=false;
+					mediaPlayer.pause();
+					ImageView image1=new ImageView("backgroundImage/img_7.png");
+					image1.setPreserveRatio(true);
+					image1.setFitHeight(30);
+					button.setGraphic(image1);
+				}else{
+					playMusic=true;
+					mediaPlayer.play();
+					ImageView image1=new ImageView("backgroundImage/img_6.png");
+					image1.setPreserveRatio(true);
+					image1.setFitHeight(30);
+					button.setGraphic(image1);
+				}
+
+			});
+
+
+			mediaPlayer.setAutoPlay(true);
+			playMusic=true;
+
+//			stage.setScene(difficultyScene);
+//			stage.show();
 			//game/main scene
 			initGameScene(primaryStage);
 	        initOver(primaryStage);
 	        //Scene2 for closing
-			animationTimer = new AnimationTimer() {
+	        
+	        animationTimer = new AnimationTimer() {
 	            @Override
 	            public void handle(long arg0) {
 	                gc.clearRect(0, 0, Width, Width);
@@ -270,6 +280,7 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 			e.printStackTrace();
 		}
 	}
+	
 	public void addAction(Stage primaryStage)
 	{
 		buttonEasy.setOnAction(e -> {
@@ -320,16 +331,12 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 
 	}
 	int i=1;
-
-
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-
-
-
-    /**
+	
+	 /**
      * This prints the gameBoard char array to the canvas, and is used to
      * graphically show the game board to the user
      */
@@ -416,3 +423,5 @@ public class Main extends Application implements EventHandler<KeyEvent>{
         }
     }
 }
+
+
