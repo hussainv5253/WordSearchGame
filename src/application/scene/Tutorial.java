@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class Turorial {
+public class Tutorial {
     static Label lbl1,lbl2,lbl3,lbl4,lbl5,lbl6,lbl7, lbl8;
     static FlowPane pane2;
     static Scene scene2;

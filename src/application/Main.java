@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-import static application.scene.Turorial.getTHbox;
+import static application.scene.Tutorial.getTHbox;
 
 
 public class Main extends Application implements EventHandler<KeyEvent>{
